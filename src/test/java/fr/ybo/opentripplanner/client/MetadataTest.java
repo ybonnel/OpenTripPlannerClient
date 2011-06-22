@@ -11,7 +11,8 @@ public class MetadataTest {
 
 	@Test
 	public void testGetMetadata() throws OpenTripPlannerException {
-		GraphMetadata metadata = new ClientOpenTripPlanner("http://transports-rennes.ic-s.org").getMetadata();
+		GraphMetadata metadata = new ClientOpenTripPlanner(
+				"http://transports-rennes.ic-s.org/opentripplanner-api-webapp").getMetadata();
 		assertNotNull(metadata);
 		assertEquals(47.7883051, metadata.getMinLatitude(), 0.0000001);
 		assertEquals(48.3784029, metadata.getMaxLatitude(), 0.0000001);

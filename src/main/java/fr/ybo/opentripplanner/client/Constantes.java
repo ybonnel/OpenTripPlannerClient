@@ -2,7 +2,7 @@ package fr.ybo.opentripplanner.client;
 
 
 public class Constantes {
-	private static final String URL_BASE = "/opentripplanner-api-webapp/ws";
+	private static final String URL_BASE = "/ws";
 	public static final String URL_PLANER = URL_BASE + "/plan";
 	public static final String URL_METADATA = URL_BASE + "/metadata";
 	/**
