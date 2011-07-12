@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import fr.ybo.opentripplanner.client.modele.Itinerary;
@@ -66,9 +67,10 @@ public class PlannerTest {
 	// lat=48.1160495, lng=-1.6789079
 
 	@Test
+	@Ignore
 	public void testPlanner() throws ParseException, OpenTripPlannerException {
 		SimpleDateFormat SDF = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-		Date date = SDF.parse("20/06/2011 12:00:00");
+		Date date = SDF.parse("18/07/2011 12:00:00");
 		Request request = new Request(48.1138212, -1.6606638, 48.1160495, -1.6789079, date);
 		ClientOpenTripPlanner client = new ClientOpenTripPlanner(
 				"http://transports-rennes.ic-s.org/opentripplanner-api-webapp");
