@@ -8,7 +8,9 @@ import static org.junit.Assert.assertTrue;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.junit.Test;
 
@@ -16,9 +18,37 @@ import fr.ybo.opentripplanner.client.modele.Itinerary;
 import fr.ybo.opentripplanner.client.modele.Leg;
 import fr.ybo.opentripplanner.client.modele.Request;
 import fr.ybo.opentripplanner.client.modele.Response;
+import fr.ybo.opentripplanner.client.modele.TraverseMode;
+import fr.ybo.opentripplanner.client.modele.TraverseModeSet;
 
 public class PlannerTest {
 	
+	@Test
+	public void choixMode() throws ParseException, OpenTripPlannerException {
+		SimpleDateFormat SDF = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+		Date date = SDF.parse("12/07/2011 18:00:00");
+		// toPlace=44.825920698932%2C-0.58469463769264&fromPlace=44.830912280174%2C-0.57263542596218
+		Request request = new Request(44.830912280174, -0.57263542596218, 44.825920698932, -0.58469463769264, date);
+		boolean bus = true;
+		boolean tram = true;
+		List<TraverseMode> modes = new ArrayList<TraverseMode>();
+		modes.add(TraverseMode.WALK);
+		if (bus && tram) {
+			modes.add(TraverseMode.TRANSIT);
+		} else if (bus) {
+			modes.add(TraverseMode.BUSISH);
+			modes.add(TraverseMode.BUS);
+		} else if (tram) {
+			modes.add(TraverseMode.TRAM);
+			modes.add(TraverseMode.TRAINISH);
+		}
+		request.setModes(new TraverseModeSet(modes));
+		ClientOpenTripPlanner client = new ClientOpenTripPlanner(
+				"http://transports-rennes.ic-s.org/bordeaux-api-webapp");
+		Response response = client.getItineraries(request);
+		System.out.println(response.getPlan().itineraries.itinerary.size());
+
+	}
 
 	@Test
 	public void testPlannerAno() throws ParseException, OpenTripPlannerException {
