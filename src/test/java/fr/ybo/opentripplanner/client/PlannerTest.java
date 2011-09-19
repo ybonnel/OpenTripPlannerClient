@@ -26,8 +26,7 @@ public class PlannerTest {
 	
 	@Test
 	public void choixMode() throws ParseException, OpenTripPlannerException {
-		SimpleDateFormat SDF = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-		Date date = SDF.parse("12/07/2011 18:00:00");
+		Date date = new Date();
 		// toPlace=44.825920698932%2C-0.58469463769264&fromPlace=44.830912280174%2C-0.57263542596218
 		Request request = new Request(44.830912280174, -0.57263542596218, 44.825920698932, -0.58469463769264, date);
 		boolean bus = true;
