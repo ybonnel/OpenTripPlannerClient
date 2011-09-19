@@ -44,7 +44,11 @@ public class Planner {
 			try {
 				reponse = gson.fromJson(reader, Response.class);
 			} finally {
-				reader.close();
+				try {
+					reader.close();
+				} catch (Exception ignore) {
+
+				}
 			}
 		} catch (Exception exception) {
 			throw new OpenTripPlannerException(exception, request);
