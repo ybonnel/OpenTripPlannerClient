@@ -44,9 +44,10 @@ public class PlannerTest {
 		}
 		request.setModes(new TraverseModeSet(modes));
 		ClientOpenTripPlanner client = new ClientOpenTripPlanner(
-				"http://transports-rennes.ic-s.org/bordeaux-api-webapp");
+				"http://109.238.11.47:8080", "bordeaux");
 		Response response = client.getItineraries(request);
-		System.out.println(response.getPlan().itineraries.itinerary.size());
+		System.out.println(response.getPlan().itineraries.size());
+		System.out.println(response.toString());
 
 	}
 
@@ -56,7 +57,7 @@ public class PlannerTest {
 		Date date = SDF.parse("05/04/2011 12:00:00");
 		Request request = new Request(48.3349386, -1.1211244, 48.1160495, -1.6789079, date);
 		ClientOpenTripPlanner client = new ClientOpenTripPlanner(
-				"http://transports-rennes.ic-s.org/opentripplanner-api-webapp");
+				"http://109.238.11.47:8080", "bordeaux");
 		client.getItineraries(request);
 	}
 
@@ -69,57 +70,55 @@ public class PlannerTest {
 	@Ignore
 	public void testPlanner() throws ParseException, OpenTripPlannerException {
 		SimpleDateFormat SDF = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-		Date date = SDF.parse("18/07/2011 12:00:00");
+		Date date = new Date();
 		Request request = new Request(48.1138212, -1.6606638, 48.1160495, -1.6789079, date);
 		ClientOpenTripPlanner client = new ClientOpenTripPlanner(
-				"http://transports-rennes.ic-s.org/opentripplanner-api-webapp");
+				"http://109.238.11.47:8080", "rennes");
 		Response response = client.getItineraries(request);
+		System.out.println(response.toString());
 		assertNotNull(response);
 		assertNull(response.getError());
 		assertNotNull(response.getPlan());
-		assertEquals(date, response.getPlan().date);
+		assertEquals(date.getTime() /1000, response.getPlan().date.getTime() / 1000);
 		assertNotNull(response.getPlan().from);
 		assertEquals(48.1138212, response.getPlan().from.lat, 0.001);
 		assertEquals(-1.6606638, response.getPlan().from.lon, 0.001);
-		assertEquals("Rue de Paris", response.getPlan().from.name);
+		assertEquals("Origin", response.getPlan().from.name);
 		assertEquals(48.1160495, response.getPlan().to.lat, 0.001);
 		assertEquals(-1.6789079, response.getPlan().to.lon, 0.001);
-		assertEquals("Rue d'Antrain", response.getPlan().to.name);
-		assertEquals(1, response.getPlan().itineraries.itinerary.size());
-		Itinerary itineraire = response.getPlan().itineraries.itinerary.get(0);
-		// 20 minutes et 41 secondes
-		assertEquals(1464000, itineraire.duration);
-		assertEquals(SDF.parse("20/06/2011 12:10:28"), itineraire.startTime);
-		assertEquals(SDF.parse("20/06/2011 12:34:52"), itineraire.endTime);
-		// 5 minutes et 58 secondes
-		assertEquals(504000, itineraire.walkTime);
-		// 11 minutes
-		assertEquals(480000, itineraire.transitTime);
+		assertEquals("Destination", response.getPlan().to.name);
+		assertEquals(3, response.getPlan().itineraries.size());
+		Itinerary itineraire = response.getPlan().itineraries.get(0);
+		
+		assertEquals(1024, itineraire.duration);
+		
+		assertEquals(782, itineraire.walkTime);
+		
+		assertEquals(240, itineraire.transitTime);
 		// 3 minutes 43 secondes
-		assertEquals(240000, itineraire.waitingTime);
-		assertEquals(659.6651497298346, itineraire.walkDistance, 0.001);
+		assertEquals(2, itineraire.waitingTime);
+		assertEquals(994.7831353333723, itineraire.walkDistance, 0.001);
 		assertEquals(0.0, itineraire.elevationLost, 0.001);
 		assertEquals(0.0, itineraire.elevationGained, 0.001);
 		assertEquals(0, itineraire.transfers.intValue());
 		assertFalse(itineraire.tooSloped);
-		assertTrue(itineraire.fare.fare.isEmpty());
 		assertNotNull(itineraire.legs);
-		assertEquals(3, itineraire.legs.leg.size());
+		assertEquals(3, itineraire.legs.size());
 		// Première étape, à pied jusqu'à l'arret oberthur.
-		Leg leg = itineraire.legs.leg.get(0);
+		Leg leg = itineraire.legs.get(0);
 		assertEquals("WALK", leg.mode);
 		
 
 		// Bus de oberthur à république
-		leg = itineraire.legs.leg.get(1);
+		leg = itineraire.legs.get(1);
 		assertEquals("BUS", leg.mode);
-		assertEquals("31", leg.route);
-		assertEquals("31 | Churchill Bourgogne", leg.headsign);
+		assertEquals("44", leg.route);
+		assertEquals("République", leg.headsign);
 		System.out.println(leg.legGeometry);
-		assertEquals("musset1", leg.from.stopId.id);
-		assertEquals("dieuw2", leg.to.stopId.id);
+		assertEquals("1:1115", leg.from.stopId);
+		assertEquals("1:1118", leg.to.stopId);
 
-		leg = itineraire.legs.leg.get(2);
+		leg = itineraire.legs.get(2);
 		assertEquals("WALK", leg.mode);
 	}
 
@@ -128,7 +127,7 @@ public class PlannerTest {
 		SimpleDateFormat SDF = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 		Date date = SDF.parse("05/04/2011 12:00:00");
 		Request request = new Request(48.1138212, -1.6606638, 48.1160495, -1.6789079, date);
-		ClientOpenTripPlanner client = new ClientOpenTripPlanner("http://tutu:8080");
+		ClientOpenTripPlanner client = new ClientOpenTripPlanner("http://tutu:8080", "");
 		client.getItineraries(request);
 	}
 

@@ -14,6 +14,7 @@ package fr.ybo.opentripplanner.client.modele;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * An Itinerary is one complete way of getting from the start location to the end location.
@@ -23,7 +24,7 @@ public class Itinerary implements Serializable {
 	private static final long serialVersionUID = 1L;
 
     /**
-     * Duration of the trip on this itinerary, in milliseconds.
+     * Duration of the trip on this itinerary, in seconds.
      */
     public long duration = 0;
 
@@ -37,15 +38,15 @@ public class Itinerary implements Serializable {
     public Date endTime = null;
 
     /**
-     * How much time is spent walking, in milliseconds.
+     * How much time is spent walking, in seconds.
      */
     public long walkTime = 0;
     /**
-     * How much time is spent on transit, in milliseconds.
+     * How much time is spent on transit, in seconds.
      */
     public long transitTime = 0;
     /**
-     * How much time is spent waiting for transit to arrive, in milliseconds.
+     * How much time is spent waiting for transit to arrive, in seconds.
      */
     public long waitingTime = 0;
 
@@ -72,16 +73,11 @@ public class Itinerary implements Serializable {
     public Integer transfers = 0;
 
     /**
-     * The cost of this trip
-     */
-    public Fare fare = new Fare();
-
-    /**
      * A list of Legs. Each Leg is either a walking (cycling, car) portion of the trip, or a transit
      * trip on a particular vehicle. So a trip where the use walks to the Q train, transfers to the
      * 6, then walks to their destination, has four legs.
      */
-	public Legs legs = null;
+	public List<Leg> legs = null;
 
     /**
      * This itinerary has a greater slope than the user requested (but there are no possible 
@@ -89,4 +85,22 @@ public class Itinerary implements Serializable {
      */
     public boolean tooSloped = false;
 
+
+    @Override
+    public String toString() {
+        return "Itinerary{" +
+                "duration=" + duration +
+                ", startTime=" + startTime +
+                ", endTime=" + endTime +
+                ", walkTime=" + walkTime +
+                ", transitTime=" + transitTime +
+                ", waitingTime=" + waitingTime +
+                ", walkDistance=" + walkDistance +
+                ", elevationLost=" + elevationLost +
+                ", elevationGained=" + elevationGained +
+                ", transfers=" + transfers +
+                ", legs=" + legs +
+                ", tooSloped=" + tooSloped +
+                '}';
+    }
 }

@@ -15,8 +15,10 @@ package fr.ybo.opentripplanner.client.modele;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import com.google.gson.annotations.SerializedName;
+import com.sun.xml.internal.xsom.impl.scd.Step;
 
 /**
  * One leg of a trip -- that is, a temporally continuous piece of the journey that takes place on a
@@ -45,27 +47,23 @@ public class Leg implements Serializable {
     /**
      * The mode (e.g., <code>Walk</code>) used when traversing this leg.
      */
-	@SerializedName(value = "@mode")
     public String mode = TraverseMode.WALK.toString();
 
     /**
      * For transit legs, the route of the bus or train being used. For non-transit legs, the name of
      * the street being traversed.
      */
-	@SerializedName(value = "@route")
     public String route = "";
 
     /**
      * For transit legs, the headsign of the bus or train being used. For non-transit legs, null.
      */
-	@SerializedName(value = "@headsign")
     public String headsign = null;
 
     /**
      * For transit legs, the ID of the transit agency that operates the service used for this leg.
      * For non-transit legs, null.
      */
-	@SerializedName(value = "@agencyId")
     public String agencyId = null;
     
     /**
@@ -77,13 +75,6 @@ public class Leg implements Serializable {
      * The Place where the leg begins.
      */
     public Place to = null;
-
-    /**
-     * For transit legs, intermediate stops between the Place where the leg originates and the Place where the leg ends.
-     * For non-transit legs, null.
-     * This field is optional i.e. it is always null unless "showIntermediateStops" parameter is set to "true" in the planner request.
-     */
-	public IntermediateStops intermediateStops = null;
     
     /**
      * The leg's geometry.
@@ -93,7 +84,7 @@ public class Leg implements Serializable {
     /**
      * A series of turn by turn instructions used for walking, biking and driving. 
      */
-	public Steps steps = null;
+	public List<WalkStep> steps = null;
     
     /** 
      * The leg's duration in milliseconds
@@ -113,4 +104,21 @@ public class Leg implements Serializable {
 		}
 		return direction;
 	}
+
+    @Override
+    public String toString() {
+        return "Leg{" +
+                "startTime=" + startTime +
+                ", endTime=" + endTime +
+                ", distance=" + distance +
+                ", mode='" + mode + '\'' +
+                ", route='" + route + '\'' +
+                ", headsign='" + headsign + '\'' +
+                ", agencyId='" + agencyId + '\'' +
+                ", from=" + from +
+                ", to=" + to +
+                ", legGeometry=" + legGeometry +
+                ", steps=" + steps +
+                '}';
+    }
 }

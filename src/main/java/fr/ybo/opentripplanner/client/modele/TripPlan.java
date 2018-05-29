@@ -17,6 +17,7 @@ package fr.ybo.opentripplanner.client.modele;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * A TripPlan is a set of ways to get from point A to point B at time T.
@@ -40,7 +41,7 @@ public class TripPlan implements Serializable {
     /** 
      * A list of possible itineraries. 
      */
-	public Itineraries itineraries = null;
+	public List<Itinerary> itineraries = null;
 
     public TripPlan() {}
     
@@ -48,5 +49,15 @@ public class TripPlan implements Serializable {
         this.from = from;
         this.to = to;
         this.date = date;
+    }
+
+    @Override
+    public String toString() {
+        return "TripPlan{" +
+                "date=" + date +
+                ", from=" + from +
+                ", to=" + to +
+                ", itineraries=" + itineraries +
+                '}';
     }
 }

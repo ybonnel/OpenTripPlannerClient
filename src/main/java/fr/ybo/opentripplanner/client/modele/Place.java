@@ -30,7 +30,7 @@ public class Place implements Serializable {
      * The ID of the stop.  Depending on the transit agency, this may or may not be something that
      * users care about.
      */
-    public AgencyAndId stopId = null;
+    public String stopId = null;
 
     /**
      * The longitude of the place.
@@ -51,9 +51,18 @@ public class Place implements Serializable {
         this.name = name;
     }
 
-    public Place(Double lon, Double lat, String name, AgencyAndId stopId) {
+    public Place(Double lon, Double lat, String name, String stopId) {
         this(lon, lat, name);
         this.stopId = stopId;
     }
 
+    @Override
+    public String toString() {
+        return "Place{" +
+                "name='" + name + '\'' +
+                ", stopId='" + stopId + '\'' +
+                ", lon=" + lon +
+                ", lat=" + lat +
+                '}';
+    }
 }

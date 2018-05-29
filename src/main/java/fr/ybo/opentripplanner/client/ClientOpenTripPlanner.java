@@ -9,9 +9,9 @@ public class ClientOpenTripPlanner {
 	private Metadata metadata;
 	private Planner planner;
 
-	public ClientOpenTripPlanner(String baseUrl) {
-		metadata = new Metadata(baseUrl);
-		planner = new Planner(baseUrl);
+	public ClientOpenTripPlanner(String baseUrl, String routerId) {
+		metadata = new Metadata(baseUrl + "/otp/routers/" + routerId);
+		planner = new Planner(baseUrl+ "/otp/routers/" + routerId + "/plan");
 	}
 
 	/**

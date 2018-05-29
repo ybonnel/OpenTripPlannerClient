@@ -28,7 +28,7 @@ public class Metadata {
 	private String urlMetadata;
 
 	protected Metadata(String baseUrl) {
-		urlMetadata = baseUrl + Constantes.URL_METADATA;
+		urlMetadata = baseUrl;
 	}
 
 	/**

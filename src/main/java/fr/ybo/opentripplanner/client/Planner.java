@@ -14,11 +14,12 @@ package fr.ybo.opentripplanner.client;
 
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.lang.reflect.Type;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.Date;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import com.google.gson.*;
 
 import fr.ybo.opentripplanner.client.modele.Request;
 import fr.ybo.opentripplanner.client.modele.Response;
@@ -28,18 +29,28 @@ public class Planner {
 	private String urlPlanner;
 
 	protected Planner(String baseUrl) {
-		urlPlanner = baseUrl + Constantes.URL_PLANER;
+		urlPlanner = baseUrl;
 	}
 
 	protected Response getItineraries(Request request) throws OpenTripPlannerException {
 		Response reponse;
 		try {
 			URL url = new URL(request.constructUrl(urlPlanner));
+
+			System.out.println(url);
 			URLConnection connection = url.openConnection();
 			connection.setRequestProperty("Content-Type", "application/json");
 			connection.setRequestProperty("Accept", "application/json");
 
-			Gson gson = new GsonBuilder().setDateFormat(Constantes.DATE_FORMAT).create();
+			Gson gson = new GsonBuilder().registerTypeAdapter(
+					Date.class,
+					new JsonDeserializer<Date>() {
+						@Override
+						public Date deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+							return new Date(json.getAsJsonPrimitive().getAsLong());
+						}
+					}
+			).create();
 			Reader reader = new InputStreamReader(connection.getInputStream(), Constantes.ENCODAGE);
 			try {
 				reponse = gson.fromJson(reader, Response.class);

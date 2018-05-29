@@ -78,4 +78,14 @@ public class PlannerError implements Serializable {
     public boolean getNoPath() {
         return noPath;
     }
+
+    @Override
+    public String toString() {
+        return "PlannerError{" +
+                "id=" + id +
+                ", msg='" + msg + '\'' +
+                ", missing=" + missing +
+                ", noPath=" + noPath +
+                '}';
+    }
 }

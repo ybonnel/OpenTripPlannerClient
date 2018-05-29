@@ -19,38 +19,53 @@ public class GraphMetadata {
     /**
      * The bounding box of the graph, in decimal degrees.
      */
-    private double minLatitude, minLongitude, maxLatitude, maxLongitude;
+    private double lowerLeftLatitude, lowerLeftLongitude, upperRightLatitude, upperRightLongitude;
 
-
-    public void setMinLatitude(double minLatitude) {
-        this.minLatitude = minLatitude;
+    public double getLowerLeftLatitude() {
+        return lowerLeftLatitude;
     }
 
+    public void setLowerLeftLatitude(double lowerLeftLatitude) {
+        this.lowerLeftLatitude = lowerLeftLatitude;
+    }
+
+    public double getLowerLeftLongitude() {
+        return lowerLeftLongitude;
+    }
+
+    public void setLowerLeftLongitude(double lowerLeftLongitude) {
+        this.lowerLeftLongitude = lowerLeftLongitude;
+    }
+
+    public double getUpperRightLatitude() {
+        return upperRightLatitude;
+    }
+
+    public void setUpperRightLatitude(double upperRightLatitude) {
+        this.upperRightLatitude = upperRightLatitude;
+    }
+
+    public double getUpperRightLongitude() {
+        return upperRightLongitude;
+    }
+
+    public void setUpperRightLongitude(double upperRightLongitude) {
+        this.upperRightLongitude = upperRightLongitude;
+    }
+    
     public double getMinLatitude() {
-        return minLatitude;
+        return lowerLeftLatitude;
     }
-
-    public void setMaxLongitude(double maxLongitude) {
-        this.maxLongitude = maxLongitude;
-    }
-
-    public double getMaxLongitude() {
-        return maxLongitude;
-    }
-
-    public void setMinLongitude(double minLongitude) {
-        this.minLongitude = minLongitude;
-    }
-
+    
     public double getMinLongitude() {
-        return minLongitude;
+        return lowerLeftLongitude;
     }
-
-    public void setMaxLatitude(double maxLatitude) {
-        this.maxLatitude = maxLatitude;
-    }
-
+    
     public double getMaxLatitude() {
-        return maxLatitude;
+        return upperRightLatitude;
+    }
+    
+    public double getMaxLongitude() {
+        return upperRightLongitude;
     }
 }

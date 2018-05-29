@@ -46,4 +46,12 @@ public class Response implements Serializable {
     public void setError(PlannerError error) {
         this.error = error;
     }
+
+    @Override
+    public String toString() {
+        return "Response{" +
+                "plan=" + plan +
+                ", error=" + error +
+                '}';
+    }
 }

@@ -88,12 +88,6 @@ public class WalkStep implements Serializable {
      * The latitude of start of the step
      */
     public double lat;
-
-    /**
-     * The elevation profile as a comma-separated list of x,y values. 
-     * x is the distance from the start of the step, y is the elevation at this distance.
-     */
-    public String elevation;
     
     public void setDirections(double lastAngle, double thisAngle, boolean roundabout) {
         relativeDirection = getRelativeDirection(lastAngle, thisAngle, roundabout);
@@ -147,4 +141,6 @@ public class WalkStep implements Serializable {
         int octant = (int) (8 + Math.round(thisAngle * 8 / (Math.PI * 2))) % 8;
         absoluteDirection = AbsoluteDirection.values()[octant];
     }
+    
+    
 }
